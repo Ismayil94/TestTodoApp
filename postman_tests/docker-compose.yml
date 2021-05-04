@@ -1,0 +1,11 @@
+version: "3"
+services:
+    newman:
+        image: postman/newman:5-alpine
+        volumes: 
+            - ".:/etc/newman/"
+        command: run jsonplaceholderTests.postman_collection.json #--reporters junit --reporter-junit-export="/etc/newman/newman-report.xml"
+                                                                  # for xml report, add the above line to the end of command
+        tty: True
+        stdin_open: True
+        

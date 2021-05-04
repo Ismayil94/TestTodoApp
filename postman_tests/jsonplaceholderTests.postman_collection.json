@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "8bec871c-3c9e-45da-bdc3-f7a268932cb0",
+		"name": "jsonplaceholderTests",
+		"description": "Tests related to fake APIs in https://jsonplaceholder.typicode.com/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 200\"] = responseCode.code ===200;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData =[]\r",
+							"jsonData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('userId').to.be.a('string');\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"    pm.expect('title').to.be.a('string');\r",
+							"    pm.expect('body').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"body\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "GET /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /posts ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 201\"] = responseCode.code ===201;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData = pm.response.json(); \r",
+							"\r",
+							"//get ID of message\r",
+							"pm.globals.set(\"postID\",jsonData.id);\r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 1,\r\n    \"id\": 222,\r\n    \"title\": \"Test Title\",\r\n    \"body\": \"Test Body\"\r\n}"
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "POST /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /posts/postID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 200\"] = responseCode.code ===200;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData =[]\r",
+							"jsonData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('userId').to.be.a('string');\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"    pm.expect('title').to.be.a('string');\r",
+							"    pm.expect('body').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"body\");\r",
+							"});\r",
+							"pm.test(\"Body\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.body).to.eql('Test Body');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts//{{postID}}",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"",
+						"{{postID}}"
+					]
+				},
+				"description": "GET /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /posts /1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "POST /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /posts",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "POST /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /posts",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "POST /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /posts/1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 200\"] = responseCode.code ===200;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('userId').to.be.a('string');\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"    pm.expect('title').to.be.a('string');\r",
+							"    pm.expect('body').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"body\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "GET /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /posts/1/comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 200\"] = responseCode.code ===200;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('userId').to.be.a('string');\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"    pm.expect('title').to.be.a('string');\r",
+							"    pm.expect('body').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"body\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "GET /posts"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /comments?postId=1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status Code is 200\"] = responseCode.code ===200;\r",
+							"tests[\"Response time less than 500ms\"]=responseTime<500;\r",
+							"\r",
+							"let jsonData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Check Data Types\", function(){\r",
+							"    pm.expect('userId').to.be.a('string');\r",
+							"    pm.expect('id').to.be.a('string');\r",
+							"    pm.expect('title').to.be.a('string');\r",
+							"    pm.expect('body').to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure of JSON\", function(){\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"body\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				},
+				"description": "GET /posts"
+			},
+			"response": []
+		}
+	]
+}

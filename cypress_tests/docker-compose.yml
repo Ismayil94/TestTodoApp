@@ -1,0 +1,9 @@
+version: "3"
+services: 
+    cypress:
+        image: cypress/included:7.2.0
+        volumes: 
+            - ".:/e2e/"
+        working_dir: "/e2e"
+        stdin_open: True
+        tty: True
