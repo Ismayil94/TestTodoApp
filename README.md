@@ -22,5 +22,12 @@ $ docker-compose up
 $ docker-compose up
 ```
  
+ 
+ ##TASK DESCRIPTION
+ 
+ 
+1. Cover ToDo app with tests using Ruby/JS/Golang (http://todomvc.com/examples/react/#/) In this task, we expect to have all paths you consider worthy covered by UI tests. Please focus on the ToDo app itself ignoring the left-hand panel. 
+2. Create few tests for REST API hosted on https://jsonplaceholder.typicode.com/ Expand existing UI tests with a set of API tests covering the critical functionality of the app mentioned above. 
+
 
 
