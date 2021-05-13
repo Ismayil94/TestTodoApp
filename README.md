@@ -1,4 +1,4 @@
-# Gelato task
+# Cypress task
 
 ## Intro
 The repository contains 2 directories:
